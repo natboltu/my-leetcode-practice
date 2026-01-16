@@ -1,0 +1,32 @@
+class Solution {
+    //Time O(nlogn), Space O(n)
+    public int furthestBuilding(int[] heights, int bricks, int ladders) {
+        PriorityQueue<Integer> pq = new PriorityQueue();
+
+        for(int i = 0; i < heights.length-1; i++){
+            int dist = heights[i+1]-heights[i];
+
+            if(dist <= 0) {
+                continue;
+            }
+            pq.offer(dist);
+            if(pq.size() > ladders){
+                int item = pq.poll();
+                bricks -= item;
+                if(bricks < 0){
+                    return i; // cannot move further;
+                }
+            }
+        }
+        return heights.length-1;
+    }
+}
+
+// Scan from left to right. For every positive climb d:
+/*
+- Put d into a min-heap
+- If heap size exceeds number of ladders, it means we’ve assigned ladders to too many   
+  climbs.
+- So we take the smallest climb out of the heap and pay it with bricks instead.
+If bricks become negative → you can’t make this move, so answer is the previous index.
+*/
