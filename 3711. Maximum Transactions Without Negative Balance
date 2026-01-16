@@ -1,0 +1,23 @@
+class Solution {
+    public int maxTransactions(int[] transactions) {
+			PriorityQueue<Integer> pq = new PriorityQueue();
+			long balance = 0;
+			int count = 0;
+
+			for(int transaction: transactions){
+				
+				balance += transaction;
+				count++;
+				if(transaction < 0){
+					pq.offer(transaction);
+				}
+
+				while(balance < 0 && !pq.isEmpty()){
+					int v = pq.poll();
+					balance -= v;
+					count--;
+				}
+			}
+			return count;
+    }
+}
