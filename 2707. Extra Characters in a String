@@ -1,0 +1,47 @@
+class Solution {
+
+    //Time O(n^2), Space O(n)
+    Set<String> dict;
+    int[] memo;
+    public int minExtraChar(String s, String[] dictionary) {
+        dict = new HashSet<>(Arrays.asList(dictionary));
+        memo = new int[s.length()];
+        Arrays.fill(memo, -1);
+        return calc(s, 0);
+    }
+
+    private int calc(String s, int i ){
+        if(i==s.length())return 0;
+        if(memo[i] != -1)return memo[i];
+        //count s[i] as an extra
+        int best = calc(s, i+1)+1;
+
+        for(int j = i; j < s.length(); j++){
+            String sub = s.substring(i, j+1);
+            if(dict.contains(sub)){
+                best = Math.min(best, calc(s,j+1));
+            }
+        }
+        memo[i]=best;
+        return memo[i];
+    }
+
+    //Time O(2^n), Space O(n) TLE solution
+    /*Set<String> dict;
+    public int minExtraChar(String s, String[] dictionary) {
+        dict = new HashSet<>(Arrays.asList(dictionary));
+        return cal(s,0);       
+    }
+
+    private int cal(String s, int i){
+        if(i == s.length())return 0;
+
+        int best = Integer.MAX_VALUE;
+        for(int j = i; j < s.length(); j++){
+            String sub = s.substring(i,j+1);
+            int count = dict.contains(sub)?0: sub.length();
+            best = Math.min(best, count+ cal(s, j+1));
+        }
+        return best;
+    }*/
+}
