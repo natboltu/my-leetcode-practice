@@ -1,0 +1,23 @@
+class Solution {
+    //Time- O(nlogn), Space- O(n)
+    //if the sum is negative then, remove the smallest negative from prefix sum
+    public int makePrefSumNonNegative(int[] nums) {
+        int moves = 0;
+        long sum = 0;
+        PriorityQueue<Integer> pq = new PriorityQueue();
+
+        for(int num: nums){
+            sum+= num;
+            if(num < 0){
+                pq.offer(num);
+            }
+
+            while(sum < 0 && !pq.isEmpty()){
+                int g = pq.poll();
+                sum -= g;
+                moves++;
+            }
+        }
+        return moves;
+    }
+}
