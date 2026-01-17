@@ -1,0 +1,37 @@
+class Solution {
+    //Time O(n*L), L = max word length 
+    Set<String> set;
+    int maxLen = 0;
+    Boolean[] memo;
+    public boolean wordBreak(String s, List<String> wordDict) {
+        set = new HashSet<>(wordDict);
+        memo = new Boolean[s.length()+1];
+
+        for(String w: wordDict){
+            maxLen = Math.max(maxLen, w.length());
+        }
+        return cal(0,s);
+    }
+
+    private boolean cal(int i, String s){
+        if(i==s.length())return true;
+        if(memo[i] != null) return memo[i];
+
+        int endLimit = Math.min(maxLen+i,s.length());
+        for(int j = i+1; j <= endLimit; j++){
+            String sub = s.substring(i,j);
+            if(set.contains(sub) && cal(j,s)){
+                memo[i] = true;
+                return memo[i];
+            }
+        }
+        memo[i]=false;
+        return memo[i];
+    }
+    /**
+    At any index i, you ask:
+    “Can I break s[i..] into valid words?”
+    If yes, then whole string is breakable.
+    This leads naturally to top-down DP (memoization) because many suffixes repeat
+    */
+}
