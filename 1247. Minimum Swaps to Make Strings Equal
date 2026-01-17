@@ -1,0 +1,37 @@
+class Solution {
+    public int minimumSwap(String s1, String s2) {
+        //Input: s1 = "xx" s2 = "yy"
+        //OUtput: 1
+
+        //Swap s1[0] and s2[1], s1 = "yx", s2 = "yx"
+        int xy = 0, yx = 0;
+
+        for(int i = 0; i < s1.length(); i++){
+            char a = s1.charAt(i);
+            char b = s2.charAt(i);
+
+            if(a==b){
+                continue;
+            }
+            if(a=='x' && b == 'y')xy++;
+            else yx++;
+        }
+
+        if((xy+yx)%2 == 1)return -1;
+        return xy/2 + yx/2 + (xy%2)*2;
+    }
+    /*
+    Two xy mismatches can be fixed in 1 swap
+Two yx mismatches can be fixed in 1 swap
+So we can do:
+
+xy/2 + yx/2 swaps (integer division)
+
+After pairing, leftover mismatches can only be:
+one xy and one yx (because total is even)
+That leftover pattern needs 2 swaps to fix.
+So:
+    */
+    //pattern: answer = xy/2 + yx/2 + (xy%2)*2
+
+}
