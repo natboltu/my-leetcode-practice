@@ -1,0 +1,51 @@
+
+//Time O(nlogn), Space O(n)
+class Solution {
+    public List<List<Integer>> minimumAbsDifference(int[] arr) {
+        Arrays.sort(arr);
+        int minDiff = Integer.MAX_VALUE;
+        for(int i = 1; i < arr.length; i++){
+            minDiff = Math.min(minDiff, arr[i]-arr[i-1]);
+        }
+        List<List<Integer>> result = new ArrayList();
+        for(int i = 1; i < arr.length; i++){
+            int diff = arr[i]-arr[i-1];
+            if(diff== minDiff){
+                result.add(List.of(arr[i-1],arr[i]));
+            }
+        }
+        return result;
+    }
+}
+
+
+/*class Pair {
+ int a;
+ int b;
+ int diff;
+ Pair(int a, int b, int diff){
+    this.a = a; this.b = b; this.diff = diff;
+ }   
+}
+
+class Solution {
+    public List<List<Integer>> minimumAbsDifference(int[] arr) {
+        
+        Arrays.sort(arr);
+        PriorityQueue<Pair> pq = new PriorityQueue<>((x, y) -> Integer.compare(x.diff, y.diff));
+
+        for (int i = 1; i < arr.length; i++) {
+            int diff = arr[i] - arr[i - 1];
+            pq.offer(new Pair(arr[i - 1], arr[i], diff));
+        }
+
+        int minDiff = pq.peek().diff;
+        List<List<Integer>> result = new ArrayList<>();
+
+        while (!pq.isEmpty() && pq.peek().diff == minDiff) {
+            Pair p = pq.poll();
+            result.add(Arrays.asList(p.a, p.b));
+        }
+        return result;
+    }
+}*/
